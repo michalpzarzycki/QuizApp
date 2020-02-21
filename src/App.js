@@ -45,7 +45,7 @@ let FIRST_QUESTION = QUIZ[0]
 let arrIndex=0;
 function App() {
 const [quizQuestion, setQuizQuestion] = useState(QUIZ[0]);
-const [questionNumber, setQuestionNumber] = useState(0)
+const [questionNumber, setQuestionNumber] = useState(1)
 function handleClick(event) {
   
   let name = event.currentTarget.name
@@ -53,12 +53,17 @@ function handleClick(event) {
 }
 
 function handleSubmit(e) {
-  
-if(QUIZ.length> questionNumber) {
+
+if(QUIZ.length > questionNumber) {
   setQuestionNumber(previousValue => previousValue+1)
   setQuizQuestion(QUIZ[questionNumber])
+  console.log(questionNumber)
+}  
 
+if((QUIZ.length-1) == questionNumber){
+  document.querySelector("#button").innerText = "ZAKOŃCZ"
 }
+
 
 }
 
@@ -75,7 +80,7 @@ if(QUIZ.length> questionNumber) {
          })}
        </div>
      </div>
-     <button onClick={handleSubmit}>NEXT</button>
+     <button onClick={handleSubmit} id="button">NEXT</button>
     </div>
   );
 }

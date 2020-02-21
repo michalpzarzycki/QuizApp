@@ -44,7 +44,7 @@ const QUIZ = [{
 
 function App() {
 const [quizQuestion, setQuizQuestion] = useState(QUIZ[0]);
-const [questionNumber, setQuestionNumber] = useState(0)
+const [questionNumber, setQuestionNumber] = useState(1)
 const [points, setPoints] = useState(0)
 const [sum, setSum] = useState(0)
 function resetAnswer() {
@@ -53,25 +53,31 @@ function resetAnswer() {
   document.querySelector('#answer3').style.backgroundColor="aqua"
   document.querySelector('#answer4').style.backgroundColor="aqua"
 }
-function handleClick(event) {
-  resetAnswer();
-  if(questionNumber>QUIZ.length-1) {
+
+function ifPoint(event) {
+  console.log("que", questionNumber)
+  console.log("QUIZ", QUIZ.length-1)
+  if(questionNumber>=QUIZ.length+1) {
     return 0;
   } else {
     document.getElementById(event.currentTarget.getAttribute('id')).style.backgroundColor="green"
     let elem = event.currentTarget.getAttribute("id")
     let idAns = elem.substr(elem.length-1)
-    if(QUIZ[questionNumber].answers[idAns-1].correct) {
+    if(QUIZ[questionNumber-1].answers[idAns-1].correct) {
       setPoints(1)
     } else {
       setPoints(0)
     }
   }
-
-
+}
+function handleClick(event) {
+  resetAnswer();
+  ifPoint(event)
 }
 
 function handleSubmit(e) {
+  resetAnswer();
+
 setSum(prev => prev+points)
 if(QUIZ.length > questionNumber) {
   setQuestionNumber(previousValue => previousValue+1)
@@ -80,7 +86,8 @@ if(QUIZ.length > questionNumber) {
 
 if((QUIZ.length) == questionNumber){
   document.querySelector("#button").innerText = "ZAKOŃCZ"
-  alert(sum)
+  document.querySelector(".popup").style.display="block"
+  document.querySelector(".result").innerText = `RESULT: ${sum}/${QUIZ.length}`
 }
 
 
@@ -89,6 +96,9 @@ if((QUIZ.length) == questionNumber){
   return (
     <div className="mainDiv">
      <div className="quizDiv">
+       <div className="popup">
+         <div className="result"></div>
+       </div>
        <div className="question">
        <Question question={quizQuestion.question}/>
        </div>

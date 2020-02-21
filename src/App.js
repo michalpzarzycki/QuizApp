@@ -7,7 +7,7 @@ const QUIZ = [{
   question:"Inside which HTML element do we put the JavaScript?",
   answers: [
     {answer:"<script>", correct:true},
-    {answer:"<link>", correct:false},
+    {answer:"<1>", correct:false},
     {answer:"<js>", correct:false},
     {answer:"<source>", correct:false}
   ]
@@ -25,7 +25,7 @@ const QUIZ = [{
   question:"asddjkas?",
   answers: [
     {answer:"<script>", correct:true},
-    {answer:"<link>", correct:false},
+    {answer:"<3>", correct:false},
     {answer:"<js>", correct:false},
     {answer:"<source>", correct:false}
   ]
@@ -35,7 +35,7 @@ const QUIZ = [{
   answers: [
     {answer:"<script>", correct:true},
     {answer:"<link>", correct:false},
-    {answer:"<js>", correct:false},
+    {answer:"<4s>", correct:false},
     {answer:"<source>", correct:false}
   ]
 }
@@ -44,7 +44,9 @@ const QUIZ = [{
 
 function App() {
 const [quizQuestion, setQuizQuestion] = useState(QUIZ[0]);
-const [questionNumber, setQuestionNumber] = useState(1)
+const [questionNumber, setQuestionNumber] = useState(0)
+const [points, setPoints] = useState(0)
+const [sum, setSum] = useState(0)
 function resetAnswer() {
   document.querySelector('#answer1').style.backgroundColor="aqua"
   document.querySelector('#answer2').style.backgroundColor="aqua"
@@ -53,20 +55,32 @@ function resetAnswer() {
 }
 function handleClick(event) {
   resetAnswer();
+  if(questionNumber>QUIZ.length-1) {
+    return 0;
+  } else {
+    document.getElementById(event.currentTarget.getAttribute('id')).style.backgroundColor="green"
+    let elem = event.currentTarget.getAttribute("id")
+    let idAns = elem.substr(elem.length-1)
+    if(QUIZ[questionNumber].answers[idAns-1].correct) {
+      setPoints(1)
+    } else {
+      setPoints(0)
+    }
+  }
 
-document.getElementById(event.currentTarget.getAttribute('id')).style.backgroundColor="green"
 
 }
 
 function handleSubmit(e) {
-console.log()
+setSum(prev => prev+points)
 if(QUIZ.length > questionNumber) {
   setQuestionNumber(previousValue => previousValue+1)
   setQuizQuestion(QUIZ[questionNumber])
 }  
 
-if((QUIZ.length-1) == questionNumber){
+if((QUIZ.length) == questionNumber){
   document.querySelector("#button").innerText = "ZAKOŃCZ"
+  alert(sum)
 }
 
 

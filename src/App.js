@@ -55,8 +55,7 @@ function resetAnswer() {
 }
 
 function ifPoint(event) {
-  console.log("que", questionNumber)
-  console.log("QUIZ", QUIZ.length-1)
+
   if(questionNumber>=QUIZ.length+1) {
     return 0;
   } else {

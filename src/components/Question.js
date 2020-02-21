@@ -1,9 +1,9 @@
 import React from 'react'
 
-function Questions() {
+function Questions({question}) {
 
     return(
-        <div>QUESTION</div>
+        <div>{question}</div>
     )
 }
 
